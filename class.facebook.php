@@ -39,6 +39,7 @@
  *
  *	FOR MORE Q&A EMAIL ME TO: Avihay@hazvuv.com
  */
+
 class Facebook {
 	
 	protected $graphUrl;
@@ -56,9 +57,9 @@ class Facebook {
 	function __construct($signed)
 	{
 		$this->graphUrl = 'https://graph.facebook.com/';
-		$this->appID = '315765441813225';
-		$this->appSecret = 'ba8f63f87c50204c0e0c7a7d8e320c48';
-		$this->appPage = 'https://www.facebook.com/pages/Test-Fan-Page/140238812752434?sk=app_315765441813225';
+		$this->appID = 'YOUR_APP_ID';
+		$this->appSecret = 'YOUR_APP_SECRET';
+		$this->appPage = 'YOUR_FAN_PAGE_URL';
 		$this->permArray = array('user_about_me', 'offline_access', 'publish_checkins', 'publish_stream');
 		
 		$this->parseSR($signed);
@@ -98,20 +99,6 @@ class Facebook {
 		if($message != NULL) { curl_setopt($ch, CURLOPT_POSTFIELDS, $attachment); }
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$out = curl_exec($ch);
-		curl_close ($ch);
-	}
-	
-	public function graphPost($to, $access, $message)
-	{
-		$attachment =  array('access_token'  => $access, 'message' => $message);
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL,$this->graphUrl.$to."/feed");
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $attachment);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$out= curl_exec($ch);
 		curl_close ($ch);
 	}
 	
