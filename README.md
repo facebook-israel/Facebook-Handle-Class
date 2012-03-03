@@ -1,16 +1,14 @@
 Facebook BetterSDK Handle Class
 -----------------------------------------------
-By: Avihay Menahem     Email: Avihay@hazvuv.com
+By: Avihay Menahem
+Email: Avihay@hazvuv.com
 
 To start using the class, first you need to config the class file according to your Facebook application details:
 
 ```
 $this->appID = 'YOUR_APP_ID';
-
 $this->appSecret = 'YOUR_APP_SECRET';
-
 $this->perArray = array('user_about_me', 'publish_stream');
-
 $this->appPage = 'YOUR_APP_FAN_PAGE';
 ```
 
@@ -31,13 +29,17 @@ $facebook->accessToken; 	 // Get the user's oauth_token Returns String, Example:
 
 To perform an like or comment on a object you need to do it this way:
 
-Comment: 									```$facebook->graphAction(POST_ID,"comments", THE_MESSAGE);```
+Comment:
+```$facebook->graphAction(POST_ID,"comments", THE_MESSAGE);```
 
-Like: 										```$facebook->graphAction(POST_ID,"likes");```
+Like:
+```$facebook->graphAction(POST_ID,"likes");```
 
-Post To Wall (user/page): ```$facebook->graphAction(USER_ID/PAGE_ID, "feed", THE_MESSAGE);```
+Post To Wall (user/page):
+```$facebook->graphAction(USER_ID/PAGE_ID, "feed", THE_MESSAGE);```
 
 FREE TO USE UNDER THE MIT LICENSE
 http://www.opensource.org/licenses/mit-license.php
 
-FOR MORE Q&A EMAIL ME TO: Avihay@hazvuv.com
+FOR MORE Q&A EMAIL ME TO:
+Avihay@hazvuv.com
