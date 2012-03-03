@@ -28,9 +28,9 @@
  *
  *	To perform an like or comment on a object you need to do it this way:
  *
- *	Comment: 									$facebook->graphAction(POST_ID,"comments", ACCESS_TOKEN, THE_MESSAGE);
- *	Like: 										$facebook->graphAction(POST_ID,"likes", ACCESS_TOKEN);
- *	Post To Wall (user/page): $facebook->graphPost(USER_ID/PAGE_ID, ACCESS_TOKEN, THE_MESSAGE);
+ *	Comment: 									$facebook->graphAction(POST_ID,"comments", THE_MESSAGE);
+ *	Like: 										$facebook->graphAction(POST_ID,"likes");
+ *	Post To Wall (user/page): $facebook->graphAction(USER_ID/PAGE_ID, "feed", THE_MESSAGE);
  *
  *	FREE TO USE UNDER THE MIT LICENSE
  *	http://www.opensource.org/licenses/mit-license.php
@@ -56,15 +56,16 @@ class Facebook {
 	
 	function __construct($signed)
 	{
-		$this->graphUrl = 'https://graph.facebook.com/';
-		$this->appID = 'YOUR_APP_ID';
-		$this->appSecret = 'YOUR_APP_SECRET';
-		$this->appPage = 'YOUR_FAN_PAGE_URL';
-		$this->permArray = array('user_about_me', 'offline_access', 'publish_checkins', 'publish_stream');
-		
+		$this->graphUrl = 'https://graph.facebook.com/'; // DO NOT CHANGE!
+		$this->appID = 'YOUR_APP_ID'; // YOUR APPLICATION ID
+		$this->appSecret = 'YOUR_APP_SECRET'; // YOUR APPLICATION SECRET
+		$this->appPage = 'YOUR_FAN_PAGE_URL'; // YOUR FAN PAGE URL
+		$this->permArray = array('user_about_me', 'offline_access', 'publish_checkins', 'publish_stream'); // ALL THE PERMISSIONS YOU NEED, SEPERATED BY COMMA
+
 		$this->parseSR($signed);
 	}
 	
+	// SENDS THE USER TO THE APP LOGIN URL
 	public function getLoginUrl()
 	{
 		$scope = implode(",", $this->permArray);
@@ -87,12 +88,11 @@ class Facebook {
 	}
 	
 	// Perform A Graph Like Or Comment Action On Object
-	public function graphAction($obj,$action,$access = NULL, $message = NULL)
+	public function graphAction($obj,$action, $message = NULL)
 	{
-		//if($access == NULL) { $access = $this->accessToken; }
-		$attachment =  array('access_token'  => $access, 'message' => $message);
+		$attachment =  array('access_token'  => $this->accessToken, 'message' => $message);
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL,$this->graphUrl.$obj."/".$action."?access_token=".$access);
+		curl_setopt($ch, CURLOPT_URL,$this->graphUrl.$obj."/".$action."?access_token=".$this->accessToken);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($ch, CURLOPT_POST, true);
