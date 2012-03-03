@@ -63,6 +63,7 @@ class Facebook {
 		$this->permArray = array('user_about_me', 'offline_access', 'publish_checkins', 'publish_stream'); // ALL THE PERMISSIONS YOU NEED, SEPERATED BY COMMA
 
 		$this->parseSR($signed);
+		$this->exchangeToken(); // FOR USE WITHOUT NO OFFLINE ACCESS
 	}
 	
 	// SENDS THE USER TO THE APP LOGIN URL
@@ -137,6 +138,20 @@ class Facebook {
 	
 	protected function base64_url_decode($input) {
 		return base64_decode(strtr($input, '-_', '+/'));
+	}
+	
+	protected function exchangeToken()
+	{
+		$url = 'https://graph.facebook.com/oauth/access_token?client_id='.$this->appID.'&client_secret='.$this->appSecret.'&grant_type=fb_exchange_token&fb_exchange_token='.$this->accessToken.'';
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT_MS, 10000);
+		$out = curl_exec($ch);
+		$data = json_decode($out, true);
+		curl_close ($ch);
+		//return $data;
 	}
 }
 ?>
